@@ -4,14 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const reactElement = 
-<React.StrictMode>
-  <App />
-  {/* React.createElement(App); */}
-</React.StrictMode>;
-
 ReactDOM.render(
-  reactElement,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
