@@ -31,14 +31,22 @@ class App extends Component{
           id:6,
           fname:'Rob'
         },
+        {
+          id:7,
+          fname:'Alex'
+        },
+        {
+          id:8,
+          fname:'Rex'
+        },
       ]
     }
   }
   render(){
-    const {fname} = this.state;
-    return <>
-    <Ciao name={fname} />
-    </>;
+    const {users} = this.state;
+    return <ul>
+      {users.map(({fname})=><li><Ciao name={fname} /></li>)}
+    </ul>;
   }
 }
 export default App;
