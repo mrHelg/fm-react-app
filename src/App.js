@@ -6,6 +6,7 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state = {
+      isDirection:true,
       users:[
         {
           id:1,
@@ -42,11 +43,26 @@ class App extends Component{
       ]
     }
   }
+  sortUsers = () =>{
+    const {users,isDirection} = this.state;
+    const sortUsers = JSON.parse(JSON.stringify(users));
+    //const sortUsers = [...users];
+    sortUsers.sort((prev, next)=> isDirection? prev.id-next.id:next.id-prev.id);
+    this.setState({
+      isDirection:!isDirection,
+      users:sortUsers
+    })
+  }
   render(){
-    const {users} = this.state;
-    return <ul>
-      {users.map(({fname})=><li><Ciao name={fname} /></li>)}
+    const {users,isDirection} = this.state;
+    return <>
+    <p>{isDirection?'straight ':'reverse '}
+    <button onClick={this.sortUsers}>SORT</button>
+    </p>
+    <ul>
+      {users.map(({fname}, i)=><li key={i}><Ciao name={fname} /></li>)}
     </ul>;
+    </>;
   }
 }
 export default App;
