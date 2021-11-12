@@ -15,10 +15,13 @@ class Ciao extends Component{
   render(){
     const {name} = this.props;
     const {isHi} = this.state;
-    return <>
-    <h2>{isHi ? 'Hi' : 'Bye'}, {name}!</h2>
-    <button onClick={this.handlerBtn}>Ciao</button>
-    </>;
+    if(isHi){
+      return <>
+        <h2>Hi, {name}!</h2>
+        <button onClick={this.handlerBtn}>Switch Ciao</button>
+        </>;
+    }
+    return <h2>Bye, {name}!</h2>;
   }
 }
 export default Ciao;
