@@ -38,7 +38,6 @@ class App extends Component{
     const {fname} = this.state;
     return <>
     <Ciao name={fname} />
-
     </>;
   }
 }
