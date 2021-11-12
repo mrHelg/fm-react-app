@@ -1,12 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import Greeting from './components/Greeting';
+import Ciao from './components/Ciao';
 function App() {
+  const user = {
+    fname:'Elon',
+    sname:'Musk'
+  }
   return <> 
-    <Greeting name='Elon Musk' word='Hello'/>
-    <Greeting name='Elen'  word='Bye'/>
-    <Greeting name='Tim Lee' word='qwerty'/>
+    <Ciao name={`${user.fname} ${user.sname}`} />
+    <Ciao name='Elen' />
+    <Ciao name='Tim Lee' />
   </>
 }
 export default App;
