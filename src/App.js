@@ -1,13 +1,10 @@
 import './App.css';
-import React, {Component} from 'react';
-import CiaoSection from './components/CiaoSection';
+import React from 'react';
+import UsersList from './components/UsersList';
 
-class App extends Component{
-  
-  render(){
-    return <>
-    <CiaoSection />
-    </>
-  }
+function App(){
+   return <>
+   <UsersList />
+  </>;  
 }
 export default App;
