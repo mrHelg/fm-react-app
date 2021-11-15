@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UserCard from '../UserCard';
 const userDB = [
   {
     id:1,
@@ -41,16 +42,15 @@ class UsersList extends Component {
       users:userDB
     }
   }
+  mapUsers = (user)=>{return (
+    <UserCard key={user.id} user={user}/>
+  )}
   render() {
     const {users} = this.state;
     return (
       <section>
         <h1>List of user:</h1>
-        {users.map(({id, fname})=>{return (
-          <article>
-            <h2><span>{id}) </span>{fname}</h2>
-          </article>
-        )})}
+        {users.map(this.mapUsers)}
       </section>
     );
   }
