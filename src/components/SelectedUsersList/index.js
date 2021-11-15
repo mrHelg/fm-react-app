@@ -5,8 +5,8 @@ const SelectedUsersList = (props) => {
   const selectedUsers = users.filter((user)=>user.isSelected);
   return (
     <div>
-      {selectedUsers.map(({fname})=>{
-        return <span>{fname}</span>
+      {selectedUsers.map(({id, fname})=>{
+        return <span key={id}>{fname}</span>
       })}
     </div>
   );
