@@ -9,10 +9,22 @@ class StopWatch extends Component {
     this.intervalId = null;
   }
 
+  tick = ()=> this.setState({count: this.state.count+1})
+
   start = ()=>{
-    this.intervalId = setInterval(()=>{
-      this.setState({count: this.state.count+1})
-    },1000);
+    if(this.intervalId===null){
+      this.intervalId = setInterval(this.tick,1000);
+    }
+  }
+
+  stop = () =>{
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+  }
+
+  reset = () =>{
+    this.stop();
+    this.setState({count: 0})
   }
     
   componentDidMount(){
@@ -23,8 +35,7 @@ class StopWatch extends Component {
   }
 
   componentWillUnmount(){
-    clearInterval(this.intervalId);
-    this.intervalId = null;
+    this.stop();
   }
 
   render() {
@@ -33,6 +44,8 @@ class StopWatch extends Component {
       <article>
         <h2>{count}</h2>
         <button onClick={this.start}>start</button>
+        <button onClick={this.stop}>stop</button>
+        <button onClick={this.reset}>reset</button>
       </article>
     );
   }
