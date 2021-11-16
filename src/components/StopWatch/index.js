@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
+import styles from './stopwatch.module.css';
 
 class StopWatch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count:0
+      time:new Date(0,0,0,0,0,0,0)
     }  
     this.intervalId = null;
   }
 
-  tick = ()=> this.setState({count: this.state.count+1})
+  tick = ()=>{
+    this.setState((state,props)=>{
+      const {time} = state;
+      const newTime = new Date(time.getTime()+1000);
+      return {time: newTime}
+    })
+  }
 
   start = ()=>{
     if(this.intervalId===null){
-      this.intervalId = setInterval(this.tick,1000);
+      this.intervalId = setInterval(this.tick, 1000);
     }
   }
 
@@ -24,11 +31,11 @@ class StopWatch extends Component {
 
   reset = () =>{
     this.stop();
-    this.setState({count: 0})
+    this.setState({time:new Date(0,0,0,0,0,0,0)})
   }
     
   componentDidMount(){
-    this.start()
+    this.start();
   }
 
   componentDidUpdate(){
@@ -39,10 +46,10 @@ class StopWatch extends Component {
   }
 
   render() {
-    const {count} = this.state;
+    const {time} = this.state;
     return (
-      <article>
-        <h2>{count}</h2>
+      <article className={styles.container}>
+        <h2>{time.toLocaleTimeString('en-GB')}</h2>
         <button onClick={this.start}>start</button>
         <button onClick={this.stop}>stop</button>
         <button onClick={this.reset}>reset</button>
