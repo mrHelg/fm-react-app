@@ -1,12 +1,12 @@
 import './App.css';
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
+import StopWatch from './components/StopWatch';
 
 
 
 function App(){
-
   return <>
-  
+  <StopWatch />
   </>;
   
 }
