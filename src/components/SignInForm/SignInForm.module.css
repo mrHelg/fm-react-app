@@ -7,9 +7,10 @@
   border: 2px solid pink;
 }
 .input{
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   padding: 0.5rem;
   border: 2px solid pink;
+  outline: 0px solid pink;
 }
 .btn{
   border: 2px solid pink;
@@ -17,4 +18,10 @@
   color: rgb(180, 93, 105);
   font-size: 1.5rem;
   cursor: pointer;
+}
+.valid{
+  border-color: aquamarine;
+}
+.invalid{
+  border-color: red;
 }
