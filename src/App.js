@@ -1,13 +1,12 @@
 import './App.css';
-import React, {Component, useState} from 'react';
-import StopWatch from './components/StopWatch';
-import Ciao from './components/CiaoSection/Ciao'
+import React, {Component} from 'react';
+import SignInForm from './components/SignInForm';
+
 
 
 function App(){
   return <>
-  <Ciao name="Elon" id="1"/>
-  <StopWatch />
+  <SignInForm />
   </>;
   
 }
