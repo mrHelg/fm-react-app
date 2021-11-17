@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import styles from './SignInForm.module.css';
 
 const initialValues = {
@@ -25,20 +26,14 @@ class SignInForm extends Component {
     this.setState({...initialValues})
   }
 
-
   render() {
 
-function cx(object){
-  return Object.entries(object)
-        .filter(([className, condition])=>condition)
-        .map(([className, condition])=>className)
-        .join(' ')
-}
-
     const {email, pwd, emailValid, pwdValid} = this.state;
-    const emailClassName = cx({
-      [styles.input]:true,
+    const emailCX = cx(styles.input,{
       [styles.invalid]:!emailValid
+    })
+    const pwdCX = cx(styles.input,{
+      [styles.invalid]:!pwdValid
     })
 
     return (
@@ -49,13 +44,13 @@ function cx(object){
         value={email}
         placeholder='email'
         onChange={this.handleInput}
-        className={emailClassName}/>
+        className={emailCX}/>
         <input type='password' 
         name='pwd'  
         value={pwd}
         placeholder='password'
         onChange={this.handleInput}
-        className={styles.input}/>
+        className={pwdCX}/>
         <input type='submit' 
         value='Sign In' 
         className={styles.btn}/>
