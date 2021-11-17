@@ -19,9 +19,7 @@
   font-size: 1.5rem;
   cursor: pointer;
 }
-.valid{
-  border-color: aquamarine;
-}
+
 .invalid{
   border-color: red;
 }

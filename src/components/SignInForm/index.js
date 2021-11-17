@@ -4,8 +4,8 @@ import styles from './SignInForm.module.css';
 const initialValues = {
       email:'',
       pwd:'',
-      emailValid:false,
-      pwdValid:false
+      emailValid:true,
+      pwdValid:true
     };
 
 class SignInForm extends Component {
@@ -24,10 +24,22 @@ class SignInForm extends Component {
     //event.target.reset();
     this.setState({...initialValues})
   }
+
+
   render() {
+
+function cx(object){
+  return Object.entries(object)
+        .filter(([className, condition])=>condition)
+        .map(([className, condition])=>className)
+        .join(' ')
+}
+
     const {email, pwd, emailValid, pwdValid} = this.state;
-    const emailClassName = `${styles.input} ${emailValid?styles.valid : styles.invalid}`;
-    const pwdClassName = `${styles.input} ${pwdValid?styles.valid : styles.invalid}`;
+    const emailClassName = cx({
+      [styles.input]:true,
+      [styles.invalid]:!emailValid
+    })
 
     return (
       <form className={styles.container}
@@ -43,7 +55,7 @@ class SignInForm extends Component {
         value={pwd}
         placeholder='password'
         onChange={this.handleInput}
-        className={pwdClassName}/>
+        className={styles.input}/>
         <input type='submit' 
         value='Sign In' 
         className={styles.btn}/>
