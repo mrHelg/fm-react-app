@@ -1,12 +1,14 @@
 import './App.css';
 import React, {Component} from 'react';
-import SignInForm from './components/SignInForm';
-
-
+import Ciao from './components/CiaoSection/Ciao';
 
 function App(){
+  const user = {
+    id:1,
+    name:'Elon'
+  }
   return <>
-  <SignInForm />
+  <Ciao name={user.name} id={user.id}/>
   </>;
   
 }
