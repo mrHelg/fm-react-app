@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import PropTypes from 'prop-types';
-import styles from './ciao.module.css';
+import styles from './ciao.module.scss';
+
 class Ciao extends Component{
   /**
    * 

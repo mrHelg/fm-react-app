@@ -1,0 +1,17 @@
+@import './../../../common/styles/breakpoinsts';
+@import './../../../common/styles/templates';
+
+.container {
+  max-width: 120px;
+  background-color: pink;
+  @extend %one-line;
+  @media screen and (min-width:$md) {
+    background-color: blue;
+  }
+}
+
+.btn {
+  border: blueviolet 3px solid;
+}
+
+
