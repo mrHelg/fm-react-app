@@ -19,7 +19,7 @@ class UsersLoader extends Component {
 
   load = () => {
     const { currentPage } = this.state;
-    getUsers({ page: currentPage, res: 10 })
+    getUsers({ page: currentPage, results: 10 })
       .then((data) => {
         console.log(data);
         if (data.error) {
@@ -55,7 +55,7 @@ class UsersLoader extends Component {
   };
 
   createUser = (user) => (
-    <li key={user.login.uuid}>{`${user.name.first} ${user.name.last}`}</li>
+    <li key={user.login.uuid}>{`${user.name.first} ${user.name.last}, ${user.nat} (${user.gender})`}</li>
   );
 
   render() {
