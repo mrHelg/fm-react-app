@@ -12,6 +12,7 @@ class UsersLoader extends Component {
       users: [],
       currentPage: 1,
       currentResults: config.DEFAULT_AMOUNT,
+      currentNat: config.DEFAULT_NAT,
     };
   }
 
@@ -20,8 +21,8 @@ class UsersLoader extends Component {
   }
 
   load = () => {
-    const { currentPage, currentResults } = this.state;
-    getUsers({ page: currentPage, results: currentResults })
+    const { currentPage, currentResults, currentNat } = this.state;
+    getUsers({ page: currentPage, results: currentResults, nat: currentNat })
       .then((data) => {
         // console.log(data);
         if (data.error) {
@@ -36,10 +37,11 @@ class UsersLoader extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { currentPage, currentResults } = this.state;
+    const { currentPage, currentResults, currentNat } = this.state;
     if (
       currentPage !== prevState.currentPage ||
-      currentResults !== prevState.currentResults
+      currentResults !== prevState.currentResults ||
+      currentNat !== prevState.currentNat
     ) {
       this.load();
     }
@@ -67,13 +69,19 @@ class UsersLoader extends Component {
 
   radioBtnValue = ({ target }) => {
     if (target.value !== this.state.currentResults) {
-      // target.checked = true;
       this.setState({ currentResults: Number(target.value) });
     }
   };
 
+  countryHandler = ({ target }) => {
+    if (target.value !== this.state.currentNat) {
+      this.setState({ currentNat: target.value });
+    }
+  };
+
   render() {
-    const { users, isLoaded, error, currentPage, currentResults } = this.state;
+    const { users, isLoaded, error, currentPage, currentResults, currentNat } =
+      this.state;
 
     if (error) {
       return <div>Error: {error}</div>;
@@ -116,6 +124,13 @@ class UsersLoader extends Component {
               15
             </label>
           </div>
+          <select value={currentNat} onChange={this.countryHandler}>
+            <option value="gb">GB</option>
+            <option value="us">US</option>
+            <option value="no">NO</option>
+            <option value="fr">FR</option>
+          </select>
+
           <p>Page: {currentPage}</p>
           <ul>{users.map(this.createUser)}</ul>
         </div>

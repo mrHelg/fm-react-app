@@ -13,7 +13,7 @@ export const getUsers = (options = {}) => {
   };
   const finalOptions = { ...defaultOptions, ...options };
   const query = queryString.stringify(finalOptions);
-  console.log(query);
+  // console.log(query);
 
   return fetch(config.BASE_URL + query).then((response) => response.json());
 };
