@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { getUsers } from '../../api';
+import Spinner from '../Spinner';
 
 class UsersLoader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isError: false,
+      error: null,
       isLoaded: false,
       users: [],
       currentPage: 1,
@@ -17,13 +19,14 @@ class UsersLoader extends Component {
 
   load = () => {
     const { currentPage } = this.state;
-    fetch(
-      `https://randomuser.me/api/?results=10&page=${currentPage}&seed=users`
-    )
-      .then((response) => response.json())
+    getUsers({ page: currentPage, res: 10 })
       .then((data) => {
         console.log(data);
-        this.setState({ isLoaded: true, users: data.results });
+        if (data.error) {
+          this.setState({ error: data.error });
+        } else {
+          this.setState({ error: null, isLoaded: true, users: data.results });
+        }
       })
       .catch((error) => {
         this.setState({ isError: true });
@@ -51,11 +54,15 @@ class UsersLoader extends Component {
     }));
   };
 
-  render() {
-    const { users, isLoaded, isError, currentPage } = this.state;
+  createUser = (user) => (
+    <li key={user.login.uuid}>{`${user.name.first} ${user.name.last}`}</li>
+  );
 
-    if (isError) {
-      return <div>Error</div>;
+  render() {
+    const { users, isLoaded, error, currentPage } = this.state;
+
+    if (error) {
+      return <div>Error: {error}</div>;
     }
     if (isLoaded) {
       return (
@@ -64,17 +71,11 @@ class UsersLoader extends Component {
           <button onClick={this.prevPage}>&lt;</button>
           <button onClick={this.nextPage}>&gt;</button>
           <p>Page: {currentPage}</p>
-          <ul>
-            {users.map((user) => (
-              <li
-                key={user.login.uuid}
-              >{`${user.name.first} ${user.name.last}`}</li>
-            ))}
-          </ul>
+          <ul>{users.map(this.createUser)}</ul>
         </div>
       );
     } else {
-      return <div>Loading</div>;
+      return <Spinner />;
     }
   }
 }
