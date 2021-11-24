@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getUsers } from '../../api';
+import config from '../../config';
 import Spinner from '../Spinner';
 
 class UsersLoader extends Component {
@@ -10,6 +11,7 @@ class UsersLoader extends Component {
       isLoaded: false,
       users: [],
       currentPage: 1,
+      currentResults: config.DEFAULT_AMOUNT,
     };
   }
 
@@ -18,10 +20,10 @@ class UsersLoader extends Component {
   }
 
   load = () => {
-    const { currentPage } = this.state;
-    getUsers({ page: currentPage, results: 10 })
+    const { currentPage, currentResults } = this.state;
+    getUsers({ page: currentPage, results: currentResults })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.error) {
           this.setState({ error: data.error });
         } else {
@@ -34,8 +36,11 @@ class UsersLoader extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { currentPage } = this.state;
-    if (currentPage != prevState.currentPage) {
+    const { currentPage, currentResults } = this.state;
+    if (
+      currentPage !== prevState.currentPage ||
+      currentResults !== prevState.currentResults
+    ) {
       this.load();
     }
   }
@@ -55,11 +60,20 @@ class UsersLoader extends Component {
   };
 
   createUser = (user) => (
-    <li key={user.login.uuid}>{`${user.name.first} ${user.name.last}, ${user.nat} (${user.gender})`}</li>
+    <li
+      key={user.login.uuid}
+    >{`${user.name.first} ${user.name.last}, ${user.nat} (${user.gender})`}</li>
   );
 
+  radioBtnValue = ({ target }) => {
+    if (target.value !== this.state.currentResults) {
+      // target.checked = true;
+      this.setState({ currentResults: Number(target.value) });
+    }
+  };
+
   render() {
-    const { users, isLoaded, error, currentPage } = this.state;
+    const { users, isLoaded, error, currentPage, currentResults } = this.state;
 
     if (error) {
       return <div>Error: {error}</div>;
@@ -70,6 +84,38 @@ class UsersLoader extends Component {
           <h2>User list</h2>
           <button onClick={this.prevPage}>&lt;</button>
           <button onClick={this.nextPage}>&gt;</button>
+          <div>
+            <label>
+              <input
+                onChange={this.radioBtnValue}
+                type="radio"
+                name="results"
+                value={5}
+                checked={currentResults === 5}
+              />
+              5
+            </label>
+            <label>
+              <input
+                onChange={this.radioBtnValue}
+                type="radio"
+                name="results"
+                value={10}
+                checked={currentResults === 10}
+              />
+              10
+            </label>
+            <label>
+              <input
+                onChange={this.radioBtnValue}
+                type="radio"
+                name="results"
+                value={15}
+                checked={currentResults === 15}
+              />
+              15
+            </label>
+          </div>
           <p>Page: {currentPage}</p>
           <ul>{users.map(this.createUser)}</ul>
         </div>
